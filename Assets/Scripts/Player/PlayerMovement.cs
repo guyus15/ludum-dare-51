@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Movement
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float _moveSpeed;
 
     private Rigidbody2D _rb2d;
 
@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, Input.GetAxis("Vertical") * moveSpeed);
+        _rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * _moveSpeed, Input.GetAxis("Vertical") * _moveSpeed);
 
         Vector3 mousePosition = Input.mousePosition;
         Vector3 playerScreenPos = Camera.main.WorldToScreenPoint(transform.position);

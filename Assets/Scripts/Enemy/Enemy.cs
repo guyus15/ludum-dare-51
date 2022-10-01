@@ -18,10 +18,13 @@ public class Enemy : MonoBehaviour, IDamagable, IMoveable
     {
         CurrentHealth = MaxHealth;
 
+        _target = GameObject.Find("Player");
         _enemyManager = FindObjectOfType<EnemyManager>();
         _rb2d = GetComponent<Rigidbody2D>();
 
         _enemyManager.RegisterEnemy(this);
+
+        _rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     private void FixedUpdate()

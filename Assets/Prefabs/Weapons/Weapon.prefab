@@ -101,7 +101,7 @@ MonoBehaviour:
   recoilForce: 1
   _weaponRoot: {fileID: 3717891393626675900}
   _weaponShootType: 1
-  _damagePerBullet: 1
+  _damagePerBullet: 25
   _bulletsPerShot: 1
   _weaponShotDelay: 0.1
   _bulletVisibilityDuration: 0.02

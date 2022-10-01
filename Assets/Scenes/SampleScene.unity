@@ -1277,6 +1277,7 @@ GameObject:
   - component: {fileID: 519420034}
   - component: {fileID: 519420033}
   - component: {fileID: 519420035}
+  - component: {fileID: 519420036}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1406,6 +1407,25 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!114 &519420036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 067ce6d8098fb3443a1d03eecd333f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minHeight: -5
+  _maxHeight: 5
+  _offsetX: 0
+  _offsetY: 2
+  _lookAheadFactor: 3
+  _damping: 0.3
+  trackingTarget: {fileID: 1784719885}
 --- !u!1 &532426115
 GameObject:
   m_ObjectHideFlags: 0
@@ -2075,7 +2095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &881199561
 Rigidbody2D:
   serializedVersion: 4
@@ -2936,6 +2956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62ab98652a0ebce40a9f4509a3459858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canPauseHere: 0
   pauseMenu: {fileID: 1104767379}
 --- !u!1 &1658940385
 GameObject:

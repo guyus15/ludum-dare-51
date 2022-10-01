@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour, IDamagable, IMoveable
 
         _enemyManager = FindObjectOfType<EnemyManager>();
         _rb2d = GetComponent<Rigidbody2D>();
+
+        _enemyManager.RegisterEnemy(this);
     }
 
     private void FixedUpdate()
@@ -50,7 +52,8 @@ public class Enemy : MonoBehaviour, IDamagable, IMoveable
 
     public void Die()
     {
-        Debug.Log("Dying");
+        _enemyManager.DeregisterEnemy(this);
+
         Destroy(gameObject);
     }
 }

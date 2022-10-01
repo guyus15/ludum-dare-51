@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class FollowBehaviour : MonoBehaviour
 {
-    [SerializeField] private float _minHeight;
-    [SerializeField] private float _maxHeight;
-
     [SerializeField] private float _offsetX;
     [SerializeField] private float _offsetY;
 
@@ -18,13 +15,9 @@ public class FollowBehaviour : MonoBehaviour
     private Vector2 _currentVelocity;
     private Vector2 _lookAheadPosition;
 
-    private Player _player;
-
     private void Start()
     {
         _lastTargetPosition = trackingTarget.position;
-
-        _player = FindObjectOfType<Player>();
     }
 
     private void Update()
@@ -46,7 +39,7 @@ public class FollowBehaviour : MonoBehaviour
         aheadTargetPos = new Vector2(aheadTargetPos.x + _offsetX, aheadTargetPos.y + _offsetY);
         Vector2 newPos = Vector2.SmoothDamp(transform.position, aheadTargetPos, ref _currentVelocity, _damping);
 
-        transform.position = new Vector3(newPos.x, Mathf.Clamp(newPos.y, _minHeight, _maxHeight), transform.position.z);
+        transform.position = new Vector3(newPos.x, newPos.y, transform.position.z);
 
         _lastTargetPosition = mousePosition;
     }

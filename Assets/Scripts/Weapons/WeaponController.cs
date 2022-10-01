@@ -60,8 +60,6 @@ public class WeaponController : MonoBehaviour
 
     public void ReloadWeapon()
     {
-        Debug.Log("Reloading weapon!");
-
         _currentAmmoInStockpile -= (_ammoPerClip - _currentAmmoInClip);
 
         int ammoToLoad;

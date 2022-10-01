@@ -36,6 +36,12 @@ public class Player : MonoBehaviour, IDamagable, IMoveable
 
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
+
+    public void Recoil(float amount, Vector2 direction)
+    {
+        _rb2d.AddForce(direction * amount, ForceMode2D.Impulse);
+    }
+
     public void RemoveHealth(int amount)
     {
         CurrentHealth = Mathf.Clamp(CurrentHealth - amount, 0, MaxHealth);

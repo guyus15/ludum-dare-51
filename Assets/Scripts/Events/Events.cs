@@ -6,6 +6,7 @@ public static class Events
     public static readonly PlayerGainHealthEvent s_PlayerGainHealthEvent = new PlayerGainHealthEvent();
     public static readonly PlayerDeathEvent s_PlayerDeathEvent = new PlayerDeathEvent();
     public static readonly PlayerPickupEvent s_PlayerPickupEvent = new PlayerPickupEvent();
+    public static readonly PlayerFireWeaponEvent s_PlayerFireWeaponEvent = new PlayerFireWeaponEvent();
     public static readonly EnemyDeathEvent s_EnemyDeathEvent = new EnemyDeathEvent();
 }
 
@@ -45,6 +46,8 @@ public class PlayerPickupEvent : GameEvent
 
     public PickupType type;
 }
+
+public class PlayerFireWeaponEvent : GameEvent { }
 
 public class EnemyDeathEvent : GameEvent
 {

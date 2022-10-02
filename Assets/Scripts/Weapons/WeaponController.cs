@@ -176,6 +176,9 @@ public class WeaponController : MonoBehaviour
 
     private IEnumerator HandleShoot()
     {
+        PlayerFireWeaponEvent fireEvt = Events.s_PlayerFireWeaponEvent;
+        EventManager.Broadcast(fireEvt);
+
         int bulletsPerThisShot = UseAmmo(_bulletsPerShot);
 
         for (int i = 0; i < bulletsPerThisShot; i++)

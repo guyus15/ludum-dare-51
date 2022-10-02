@@ -16,8 +16,6 @@ public class ReloadProgressIndicator : MonoBehaviour
     {
         EventManager.AddListener<PlayerReloadEvent>(OnReload);
 
-        Debug.Log("I am awake");
-
         _reloadProgressIndicator = GetComponent<Image>();
         _reloadProgressIndicator.enabled = false;
     }

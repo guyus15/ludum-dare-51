@@ -19,14 +19,15 @@ public class DamageIndicator : MonoBehaviour
     private float _vignetteIntensity;
 
     private Vignette _vignetteComponent;
+    private PaniniProjection _paniniProjectionComponent;
 
-    private void Start()
+    private int _currentHealth;
+
+    private void Awake()
     {
+        EventManager.AddListener<PlayerSpawnEvent>(OnPlayerSpawn);
         EventManager.AddListener<PlayerHitEvent>(OnPlayerHit);
-    }
 
-    private void OnPlayerHit(PlayerHitEvent evt)
-    {
         // Finding the Vignette component of the global volume
         foreach (var volumeComponent in _globalVolume.profile.components)
         {
@@ -34,7 +35,22 @@ public class DamageIndicator : MonoBehaviour
             {
                 _vignetteComponent = vignette;
             }
+
+            if (volumeComponent is PaniniProjection paniniProjection)
+            {
+                _paniniProjectionComponent = paniniProjection;
+            }
         }
+    }
+
+    private void OnPlayerSpawn(PlayerSpawnEvent evt)
+    {
+        _currentHealth = evt.maxHealth;
+    }
+
+    private void OnPlayerHit(PlayerHitEvent evt)
+    {
+        _currentHealth = evt.currentHealth;
 
         float vignetteIntensityAmount = Mathf.Clamp(((float)evt.damageInflicted / 100), 0, 1 - _vignetteBaseIntensity);
         _vignetteIntensity = _vignetteBaseIntensity + vignetteIntensityAmount;
@@ -80,5 +96,7 @@ public class DamageIndicator : MonoBehaviour
                 _isFadingOut = false;
             }
         }
+
+        _paniniProjectionComponent.distance.value = (100 - _currentHealth) / 100.0f;
     }
 }

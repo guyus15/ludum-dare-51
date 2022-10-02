@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 220670700}
   - component: {fileID: 220670699}
   - component: {fileID: 220670698}
+  - component: {fileID: 220670701}
   m_Layer: 5
   m_Name: ReloadProgressIndicator
   m_TagString: Untagged
@@ -323,6 +324,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220670696}
   m_CullTransparentMesh: 1
+--- !u!114 &220670701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220670696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e585305b9715734bb553f7d38c1d1dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &241159155
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -675,7 +688,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 334423245}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1592892187}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &334423245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -838,7 +863,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 364487578}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1592892184}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &364487578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1308,10 +1345,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.0019305019
-    width: 0.99914163
-    height: 0.996139
+    x: 0.0008605852
+    y: 0.0019267823
+    width: 0.9982788
+    height: 0.99421966
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -3214,7 +3251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62ab98652a0ebce40a9f4509a3459858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canPauseHere: 0
+  canPauseHere: 1
   pauseMenu: {fileID: 1104767379}
 --- !u!1 &1640631238
 GameObject:
@@ -3566,7 +3603,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1592892187}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: Resume
         m_Mode: 1

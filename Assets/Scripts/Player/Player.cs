@@ -92,7 +92,7 @@ public class Player : MonoBehaviour, IDamagable, IMoveable
 
     public void Die()
     {
-        Debug.Log("Dying");
-        //Destroy(gameObject);
+        PlayerDeathEvent deathEvt = Events.s_PlayerDeathEvent;
+        EventManager.Broadcast(deathEvt);
     }
 }

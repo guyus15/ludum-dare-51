@@ -3,6 +3,7 @@ public static class Events
     public static readonly PlayerSpawnEvent s_PlayerSpawnEvent = new PlayerSpawnEvent();
     public static readonly PlayerReloadEvent s_PlayerReloadEvent = new PlayerReloadEvent();
     public static readonly PlayerHitEvent s_PlayerHitEvent = new PlayerHitEvent();
+    public static readonly PlayerDeathEvent s_PlayerDeathEvent = new PlayerDeathEvent();
 }
 
 public class PlayerSpawnEvent : GameEvent
@@ -23,3 +24,5 @@ public class PlayerHitEvent : GameEvent
     public int currentHealth;
     public int damageInflicted;
 }
+
+public class PlayerDeathEvent : GameEvent { }

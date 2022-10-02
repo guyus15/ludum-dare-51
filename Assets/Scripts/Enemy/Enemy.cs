@@ -11,6 +11,9 @@ public class Enemy : MonoBehaviour, IDamagable, IMoveable
     public int MaxHealth { get; set; }
     public int CurrentHealth { get; private set; }
 
+    [Header("Damage")]
+    [SerializeField] private int _damagePerHit = 20;
+
     private EnemyManager _enemyManager;
     private Rigidbody2D _rb2d;
 
@@ -58,5 +61,20 @@ public class Enemy : MonoBehaviour, IDamagable, IMoveable
         _enemyManager.DeregisterEnemy(this);
 
         Destroy(gameObject);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        IDamagable objectDamagable = collision?.gameObject.transform.GetComponent<IDamagable>();
+
+        if (objectDamagable != null)
+            objectDamagable.RemoveHealth(_damagePerHit);
+        else
+        {
+            // Check parent
+            objectDamagable = collision?.gameObject.transform.parent.GetComponent<IDamagable>();
+
+            objectDamagable?.RemoveHealth(_damagePerHit);
+        }
     }
 }

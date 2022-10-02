@@ -18,6 +18,9 @@ public class Enemy : MonoBehaviour, IDamagable, IMoveable
 
     private EnemyManager _enemyManager;
     private Rigidbody2D _rb2d;
+    private BoxCollider2D _boxCollider;
+
+    private BodyTypeDetector _bodyTypeDetector;
 
     private void Start()
     {
@@ -26,10 +29,26 @@ public class Enemy : MonoBehaviour, IDamagable, IMoveable
         _target = GameObject.Find("Player");
         _enemyManager = FindObjectOfType<EnemyManager>();
         _rb2d = GetComponent<Rigidbody2D>();
+        _boxCollider = GetComponent<BoxCollider2D>();
 
         _enemyManager.RegisterEnemy(this);
 
         _rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        _bodyTypeDetector = GetComponentInChildren<BodyTypeDetector>();
+
+        _boxCollider.enabled = false;
+    }
+
+    private void Update()
+    {
+        if (_bodyTypeDetector.ShouldChange)
+        {
+            _boxCollider.enabled = true;
+
+            GameObject bodyDetectorChild = transform.Find("Body Type Detector").gameObject;
+            bodyDetectorChild.SetActive(false);
+        }
     }
 
     private void FixedUpdate()
@@ -73,10 +92,16 @@ public class Enemy : MonoBehaviour, IDamagable, IMoveable
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        // Return if it is another clown so they don't hurt each other
+        if (collision.gameObject.CompareTag("Clown"))
+            return;
+
         IDamagable objectDamagable = collision?.gameObject.transform.GetComponent<IDamagable>();
 
         if (objectDamagable != null)
+        {
             objectDamagable.RemoveHealth(_damagePerHit);
+        }
         else
         {
             // Check parent

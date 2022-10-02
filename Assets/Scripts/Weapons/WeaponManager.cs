@@ -20,6 +20,7 @@ public class WeaponManager : MonoBehaviour
 
     [SerializeField] private LayerMask weaponLayer;
 
+    public WeaponController ActiveWeapon { get; private set; }
     public bool IsPointingAtEnemy { get; set; }
 
     private void Start()
@@ -30,41 +31,41 @@ public class WeaponManager : MonoBehaviour
 
     private void Update()
     {
-        WeaponController activeWeapon = _weapon.GetComponent<WeaponController>();
+        ActiveWeapon = _weapon.GetComponent<WeaponController>();
 
-        if (activeWeapon == null) return;
+        if (ActiveWeapon == null) return;
 
-        if (activeWeapon.IsReloading) return;
+        if (ActiveWeapon.IsReloading) return;
 
-        if (activeWeapon.CanReload())
+        if (ActiveWeapon.CanReload())
         {
-            if (!activeWeapon.automaticReload && InputManager.GetReloadInputDown())
+            if (!ActiveWeapon.automaticReload && InputManager.GetReloadInputDown())
             {
                 // Handle manual reloading here
 
-                activeWeapon.IsReloading = true;
+                ActiveWeapon.IsReloading = true;
 
                 PlayerReloadEvent evt = Events.s_PlayerReloadEvent;
-                evt.reloadTime = activeWeapon.reloadTime;
-                evt.onReloadInstance = activeWeapon.ReloadWeapon;
+                evt.reloadTime = ActiveWeapon.reloadTime;
+                evt.onReloadInstance = ActiveWeapon.ReloadWeapon;
                 EventManager.Broadcast(evt);
             }
 
-            if (activeWeapon.automaticReload && activeWeapon.NeedsToReload)
+            if (ActiveWeapon.automaticReload && ActiveWeapon.NeedsToReload)
             {
                 // Handle automatic reloading here
 
-                activeWeapon.IsReloading = true;
+                ActiveWeapon.IsReloading = true;
 
                 PlayerReloadEvent evt = Events.s_PlayerReloadEvent;
-                evt.reloadTime = activeWeapon.reloadTime;
-                evt.onReloadInstance = activeWeapon.ReloadWeapon;
+                evt.reloadTime = ActiveWeapon.reloadTime;
+                evt.onReloadInstance = ActiveWeapon.ReloadWeapon;
                 EventManager.Broadcast(evt);
             }
         }
 
         // Handle weapon shooting
-        hasFired = activeWeapon.HandleShootInputs(
+        hasFired = ActiveWeapon.HandleShootInputs(
             InputManager.GetFireInputDown(),
             InputManager.GetFireInputHeld(),
             InputManager.GetFireInputUp()
@@ -73,7 +74,7 @@ public class WeaponManager : MonoBehaviour
         // Handle weapon recoil
         if (hasFired)
         {
-            _accumulatedRecoil += Vector2.left * activeWeapon.recoilForce;
+            _accumulatedRecoil += Vector2.left * ActiveWeapon.recoilForce;
             _accumulatedRecoil = Vector2.ClampMagnitude(_accumulatedRecoil, _maxRecoilDistance);
         }
     }

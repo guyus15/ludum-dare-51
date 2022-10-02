@@ -17,10 +17,13 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private int _bulletsPerShot = 1;
     [SerializeField] private float _weaponShotDelay = 0.5f;
     [SerializeField] private float _bulletVisibilityDuration = 0.02f;
-    [SerializeField] private float _bulletSpreadAngle = 0.0f;
+    [SerializeField] private double _bulletSpreadAngle = 0.0f;
     [SerializeField] private float _bulletForce = 1.0f;
     [SerializeField] private bool _wantsToShoot;
+
     private int _oldDamagePerBullet;
+    private double _oldBulletSpreadAngle;
+    private float _oldFireRate;
 
     [Header("Ammunition Parameters")]
     public bool automaticReload = true;
@@ -48,6 +51,8 @@ public class WeaponController : MonoBehaviour
     private void Awake()
     {
         _oldDamagePerBullet = _damagePerBullet;
+        _oldBulletSpreadAngle = _bulletSpreadAngle;
+        _oldFireRate = _weaponShotDelay;
 
         _currentAmmoInStockpile = _startingAmmoInStockpile;
         _currentAmmoInClip = _ammoPerClip;
@@ -121,15 +126,35 @@ public class WeaponController : MonoBehaviour
 
     public void IncreaseBulletDamage(int amount)
     {
-        Debug.Log($"Increasing bullet damage by {amount}");
         _oldDamagePerBullet = _damagePerBullet;
         _damagePerBullet += amount;
     }
 
     public void ResetBulletDamage()
     {
-        Debug.Log($"Resetting bullet damage to {_oldDamagePerBullet}");
         _damagePerBullet = _oldDamagePerBullet;
+    }
+
+    public void IncreaseBulletSpread(double amount)
+    {
+        _oldBulletSpreadAngle = _bulletSpreadAngle;
+        _bulletSpreadAngle += amount;
+    }
+
+    public void ResetBulletSpread()
+    {
+        _bulletSpreadAngle = _oldBulletSpreadAngle;
+    }
+
+    public void IncreaseFireRate(float amount)
+    {
+        _oldFireRate = _weaponShotDelay;
+        _weaponShotDelay = 1 / ((1 / _weaponShotDelay) + amount);
+    }
+
+    public void ResetFireRate()
+    {
+        _weaponShotDelay = _oldFireRate;
     }
 
     private bool TryShoot()
@@ -212,9 +237,9 @@ public class WeaponController : MonoBehaviour
 
     private Vector2 GetShotDirectionWithinSpread(Transform shootTransform)
     {
-        float spreadAngleRatio = _bulletSpreadAngle / 180.0f;
+        double spreadAngleRatio = _bulletSpreadAngle / 180.0;
 
-        Vector2 spreadWorldDirection = Vector3.Slerp(shootTransform.right, Random.insideUnitCircle, spreadAngleRatio);
+        Vector2 spreadWorldDirection = Vector3.Slerp(shootTransform.right, Random.insideUnitCircle, (float)spreadAngleRatio);
 
         return spreadWorldDirection;
     }

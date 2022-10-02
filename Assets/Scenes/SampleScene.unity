@@ -1250,9 +1250,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.0018832391
-    width: 0.9991079
-    height: 0.99435025
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -3010,6 +3010,7 @@ GameObject:
   - component: {fileID: 1592892186}
   - component: {fileID: 1592892187}
   - component: {fileID: 1592892185}
+  - component: {fileID: 1592892188}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -3058,6 +3059,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canPauseHere: 1
   pauseMenu: {fileID: 1104767379}
+--- !u!114 &1592892188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592892184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6366bbdbba55c64997ae119f608a788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthPickupObject: {fileID: 739514038464407452, guid: 9c057374f596b2d428ab7169c7972e7d, type: 3}
+  _ammoPickupObject: {fileID: 2941862204758668245, guid: 5c1a4177f3a53834c80b3e592df8f583, type: 3}
 --- !u!1001 &1632338873
 PrefabInstance:
   m_ObjectHideFlags: 0

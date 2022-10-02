@@ -27,6 +27,7 @@ public class DamageIndicator : MonoBehaviour
     {
         EventManager.AddListener<PlayerSpawnEvent>(OnPlayerSpawn);
         EventManager.AddListener<PlayerHitEvent>(OnPlayerHit);
+        EventManager.AddListener<PlayerGainHealthEvent>(OnPlayerGainHealth);
 
         // Finding the Vignette component of the global volume
         foreach (var volumeComponent in _globalVolume.profile.components)
@@ -56,6 +57,11 @@ public class DamageIndicator : MonoBehaviour
         _vignetteIntensity = _vignetteBaseIntensity + vignetteIntensityAmount;
 
         StartEffect();
+    }
+
+    private void OnPlayerGainHealth(PlayerGainHealthEvent evt)
+    {
+        _currentHealth = evt.currentHealth;
     }
 
     private void StartEffect()

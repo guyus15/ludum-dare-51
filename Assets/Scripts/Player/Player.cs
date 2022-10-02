@@ -18,6 +18,11 @@ public class Player : MonoBehaviour, IDamagable, IMoveable
 
     private Rigidbody2D _rb2d;
 
+    private void Awake()
+    {
+        EventManager.AddListener<PlayerPickupEvent>(OnPickup);
+    }
+
     private void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();
@@ -88,11 +93,26 @@ public class Player : MonoBehaviour, IDamagable, IMoveable
     public void AddHealth(int amount)
     {
         CurrentHealth = Mathf.Clamp(CurrentHealth + amount, 0, MaxHealth);
+
+        PlayerGainHealthEvent gainHealthEvt = Events.s_PlayerGainHealthEvent;
+        gainHealthEvt.currentHealth = CurrentHealth;
+        EventManager.Broadcast(gainHealthEvt);
     }
 
     public void Die()
     {
         PlayerDeathEvent deathEvt = Events.s_PlayerDeathEvent;
         EventManager.Broadcast(deathEvt);
+    }
+
+    private void OnPickup(PlayerPickupEvent evt)
+    {
+        switch (evt.type)
+        {
+            case PlayerPickupEvent.PickupType.HEALTH:
+                Debug.Log("Picking up health.");
+                AddHealth(GameConstants.HEALTH_PICKUP_AMOUNT);
+                break;
+        }
     }
 }

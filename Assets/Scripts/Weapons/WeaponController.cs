@@ -158,6 +158,12 @@ public class WeaponController : MonoBehaviour
         _weaponShotDelay = _oldFireRate;
     }
 
+    public void AddAmmo(int amount)
+    {
+        _currentAmmoInClip = _ammoPerClip;
+        _currentAmmoInStockpile += amount;
+    }
+
     private bool TryShoot()
     {
         if (_currentAmmoInClip < 1 || !(_lastTimeShot + _weaponShotDelay < Time.time) || GameManager.IsPaused)

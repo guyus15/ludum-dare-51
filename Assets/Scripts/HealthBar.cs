@@ -9,6 +9,7 @@ public class HealthBar : MonoBehaviour
     {
         EventManager.AddListener<PlayerSpawnEvent>(OnPlayerSpawn);
         EventManager.AddListener<PlayerHitEvent>(OnPlayerHit);
+        EventManager.AddListener<PlayerGainHealthEvent>(OnPlayerGainHealth);
     }
 
     private void OnPlayerSpawn(PlayerSpawnEvent evt)
@@ -20,8 +21,18 @@ public class HealthBar : MonoBehaviour
 
     private void OnPlayerHit(PlayerHitEvent evt)
     {
+        UpdateBar(evt.currentHealth);
+    }
+
+    private void OnPlayerGainHealth(PlayerGainHealthEvent evt)
+    {
+        UpdateBar(evt.currentHealth);
+    }
+
+    private void UpdateBar(int currentHealth)
+    {
         if (_healthBarInner == null) return;
 
-        _healthBarInner.fillAmount = (1.0f / 100.0f) * evt.currentHealth;
+        _healthBarInner.fillAmount = (1.0f / 100.0f) * currentHealth;
     }
 }

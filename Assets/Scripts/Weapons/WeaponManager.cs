@@ -23,6 +23,11 @@ public class WeaponManager : MonoBehaviour
     public WeaponController ActiveWeapon { get; private set; }
     public bool IsPointingAtEnemy { get; set; }
 
+    private void Awake()
+    {
+        EventManager.AddListener<PlayerPickupEvent>(OnPickup);
+    }
+
     private void Start()
     {
         _weapon = Instantiate(_weaponPrefab, _weaponParentSocket.transform.position, _weaponParentSocket.transform.rotation);
@@ -94,6 +99,17 @@ public class WeaponManager : MonoBehaviour
         {
             _weaponRecoilLocalPosition = Vector2.Lerp(_weaponRecoilLocalPosition, Vector2.zero, _returnRecoilSharpness * Time.deltaTime);
             _accumulatedRecoil = _weaponRecoilLocalPosition;
+        }
+    }
+
+    private void OnPickup(PlayerPickupEvent evt)
+    {
+        switch (evt.type)
+        {
+            case PlayerPickupEvent.PickupType.AMMO:
+                Debug.Log("Picking up ammo.");
+                ActiveWeapon.AddAmmo(GameConstants.AMMO_PICKUP_AMOUNT);
+                break;
         }
     }
 }

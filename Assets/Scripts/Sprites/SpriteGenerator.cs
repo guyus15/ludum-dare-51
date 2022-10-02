@@ -96,6 +96,11 @@ public class SpriteGenerator : MonoBehaviour
                 }
             }
         }
+
+        GameObject nose = ParentGameObject.transform.GetChild (5).gameObject;
+        Color noseColour = GenerateColor(colorArray);
+        spriteRenderer = nose.GetComponent<SpriteRenderer>();
+        spriteRenderer.color = noseColour; //Apply new colour
     }
     private Color GenerateColor(Color[] colorArray)
     {

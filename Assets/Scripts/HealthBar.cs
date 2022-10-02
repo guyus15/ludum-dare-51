@@ -13,7 +13,6 @@ public class HealthBar : MonoBehaviour
 
     private void OnPlayerSpawn(PlayerSpawnEvent evt)
     {
-        Debug.Log($"Spawning player with max health {evt.maxHealth}");
         _healthBarInner.fillAmount = (1.0f / 100.0f) * evt.maxHealth;
     }
 

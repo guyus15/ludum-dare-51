@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public static class Events
 {
     public static readonly PlayerReloadEvent s_PlayerReloadEvent = new PlayerReloadEvent();

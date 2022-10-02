@@ -27,6 +27,9 @@ public class AmmoCounter : MonoBehaviour
     {
         _weaponController = _playerWeaponManager.ActiveWeapon;
 
+        if (_weaponController == null)
+            return;
+
         string ammoText = _weaponController.GetAmmoText();
 
         float fontSizeDelta = _perCharacterFontSize * (ammoText.Length - _characterLengthBeforeOverflow);

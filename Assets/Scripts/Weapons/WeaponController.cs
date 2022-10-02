@@ -20,6 +20,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float _bulletSpreadAngle = 0.0f;
     [SerializeField] private float _bulletForce = 1.0f;
     [SerializeField] private bool _wantsToShoot;
+    private int _oldDamagePerBullet;
 
     [Header("Ammunition Parameters")]
     public bool automaticReload = true;
@@ -46,6 +47,8 @@ public class WeaponController : MonoBehaviour
 
     private void Awake()
     {
+        _oldDamagePerBullet = _damagePerBullet;
+
         _currentAmmoInStockpile = _startingAmmoInStockpile;
         _currentAmmoInClip = _ammoPerClip;
 
@@ -114,6 +117,19 @@ public class WeaponController : MonoBehaviour
         {
             lineRenderer.enabled = false;
         }
+    }
+
+    public void IncreaseBulletDamage(int amount)
+    {
+        Debug.Log($"Increasing bullet damage by {amount}");
+        _oldDamagePerBullet = _damagePerBullet;
+        _damagePerBullet += amount;
+    }
+
+    public void ResetBulletDamage()
+    {
+        Debug.Log($"Resetting bullet damage to {_oldDamagePerBullet}");
+        _damagePerBullet = _oldDamagePerBullet;
     }
 
     private bool TryShoot()

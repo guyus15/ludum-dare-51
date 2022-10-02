@@ -13,4 +13,8 @@ public class GameConstants
 
     // Enemy
     public const int MAX_ENEMIES = 100;
+
+    // Modifiers
+    public const int MAX_PLAYER_DAMAGE_INCREASE = 50;
+    public const int MIN_PLAYER_DAMAGE_INCREASE = 5;
 }

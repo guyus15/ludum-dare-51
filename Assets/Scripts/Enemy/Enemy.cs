@@ -87,27 +87,38 @@ public class Enemy : MonoBehaviour, IDamagable, IMoveable
             Instantiate(_deathParticles, transform.position, transform.rotation);
         }
 
+        EnemyDeathEvent deathEvt = Events.s_EnemyDeathEvent;
+        deathEvt.xPos = transform.position.x;
+        deathEvt.yPos = transform.position.y;
+        EventManager.Broadcast(deathEvt);
+
         Destroy(gameObject);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (collision == null) return;
+
         // Return if it is another clown so they don't hurt each other
         if (collision.gameObject.CompareTag("Clown"))
             return;
 
-        IDamagable objectDamagable = collision?.gameObject.transform.GetComponent<IDamagable>();
-
-        if (objectDamagable != null)
+        if (collision.gameObject.transform.TryGetComponent<IDamagable>(out var objectDamagable))
         {
             objectDamagable.RemoveHealth(_damagePerHit);
         }
         else
         {
             // Check parent
-            objectDamagable = collision?.gameObject.transform.parent.GetComponent<IDamagable>();
+            try
+            {
+                objectDamagable = collision.gameObject.transform.parent.GetComponent<IDamagable>();
 
-            objectDamagable?.RemoveHealth(_damagePerHit);
+                objectDamagable?.RemoveHealth(_damagePerHit);
+            } catch
+            {
+                return;
+            }
         }
     }
 }

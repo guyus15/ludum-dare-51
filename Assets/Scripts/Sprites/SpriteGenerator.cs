@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class spriteGenerator : MonoBehaviour
+public class SpriteGenerator : MonoBehaviour
 {
     // Start is called before the first frame update
     public SpriteRenderer spriteRenderer;

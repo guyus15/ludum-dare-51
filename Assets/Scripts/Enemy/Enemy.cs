@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour, IDamagable, IMoveable
     [Header("Damage")]
     [SerializeField] private int _damagePerHit = 20;
 
+    [SerializeField] private GameObject _deathParticles;
+
     private EnemyManager _enemyManager;
     private Rigidbody2D _rb2d;
 
@@ -59,6 +61,12 @@ public class Enemy : MonoBehaviour, IDamagable, IMoveable
     public void Die()
     {
         _enemyManager.DeregisterEnemy(this);
+
+        if (_deathParticles != null)
+        {
+            Debug.Log("Emitting particles");
+            Instantiate(_deathParticles, transform.position, transform.rotation);
+        }
 
         Destroy(gameObject);
     }

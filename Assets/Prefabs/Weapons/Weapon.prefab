@@ -114,7 +114,8 @@ MonoBehaviour:
   _ammoPerClip: 30
   _muzzlePosition: {fileID: 4530313778005639027}
   _muzzleFlashEffect: {fileID: 0}
-  _impactParticleEffect: {fileID: 0}
+  _bloodParticleEffect: {fileID: 3743694457610930726, guid: 768c42078eb3f0c43acb70c788a9e4dd, type: 3}
+  _wallParticleEffect: {fileID: 3743694457610930726, guid: ee584826d04e99a43b9cbf918107a7c6, type: 3}
   _lineRendersMaxLength: 100
 --- !u!1 &8966341826544898107
 GameObject:

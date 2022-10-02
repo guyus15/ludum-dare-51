@@ -196,8 +196,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4700991396425948895}
-  m_LocalRotation: {x: 0, y: 0, z: -0.9883251, w: 0.15235955}
-  m_LocalPosition: {x: -23.471916, y: 18.572939, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -276,6 +276,8 @@ MonoBehaviour:
   <MoveSpeed>k__BackingField: 3
   _target: {fileID: 0}
   <MaxHealth>k__BackingField: 100
+  _damagePerHit: 20
+  _deathParticles: {fileID: 2228890305782669150, guid: d8a9c7af1414a6d4e9f2efaf07e07d16, type: 3}
 --- !u!114 &4700991396425948880
 MonoBehaviour:
   m_ObjectHideFlags: 0

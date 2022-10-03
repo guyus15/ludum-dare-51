@@ -9,6 +9,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool canPauseHere = false;
     [SerializeField] private GameObject pauseMenu;
 
+    private void Awake()
+    {
+        EventManager.AddListener<PlayerDeathEvent>(OnPlayerDeath);
+    }    
+
     private void Start()
     {
         if (pauseMenu != null)
@@ -25,25 +30,43 @@ public class GameManager : MonoBehaviour
 
     private void Pause()
     {
-        pauseMenu.SetActive(true);
+        if (pauseMenu != null)
+            pauseMenu.SetActive(true);
+
         Time.timeScale = 0;
         IsPaused = true;
     }
 
     public void Resume()
     {
-        pauseMenu.SetActive(false);
+        if (pauseMenu != null)
+            pauseMenu.SetActive(false);
+
         Time.timeScale = 1;
         IsPaused = false;
     }
 
     public void LoadScene(int sceneIndex)
     {
-        SceneManager.LoadScene(sceneIndex, LoadSceneMode.Single);
+        SceneManager.LoadScene(sceneIndex);
+
+        // Make sure scene isn't paused
+        Resume();
+    }
+
+    public void UnloadScene(int sceneIndex)
+    {
+        SceneManager.UnloadSceneAsync(sceneIndex);
     }
 
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    private void OnPlayerDeath(PlayerDeathEvent evt)
+    {
+        // Load the game over screen
+        LoadScene(2);
     }
 }

@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -114,7 +114,8 @@ MonoBehaviour:
   _ammoPerClip: 30
   _muzzlePosition: {fileID: 4530313778005639027}
   _muzzleFlashEffect: {fileID: 0}
-  _impactParticleEffect: {fileID: 0}
+  _bloodParticleEffect: {fileID: 3743694457610930726, guid: 768c42078eb3f0c43acb70c788a9e4dd, type: 3}
+  _wallParticleEffect: {fileID: 3743694457610930726, guid: ee584826d04e99a43b9cbf918107a7c6, type: 3}
   _lineRendersMaxLength: 100
 --- !u!1 &8966341826544898107
 GameObject:

@@ -38,7 +38,8 @@ public class WeaponController : MonoBehaviour
     [Header("Weapon Effects")]
     [SerializeField] private Transform _muzzlePosition;
     [SerializeField] private GameObject _muzzleFlashEffect;
-    [SerializeField] private GameObject _impactParticleEffect;
+    [SerializeField] private GameObject _bloodParticleEffect;
+    [SerializeField] private GameObject _wallParticleEffect;
     [SerializeField] private float _lineRendersMaxLength = 100.0f;
 
     private LineRenderer[] _lineRenderers;
@@ -157,6 +158,12 @@ public class WeaponController : MonoBehaviour
         _weaponShotDelay = _oldFireRate;
     }
 
+    public void AddAmmo(int amount)
+    {
+        _currentAmmoInClip = _ammoPerClip;
+        _currentAmmoInStockpile += amount;
+    }
+
     private bool TryShoot()
     {
         if (_currentAmmoInClip < 1 || !(_lastTimeShot + _weaponShotDelay < Time.time) || GameManager.IsPaused)
@@ -169,6 +176,9 @@ public class WeaponController : MonoBehaviour
 
     private IEnumerator HandleShoot()
     {
+        PlayerFireWeaponEvent fireEvt = Events.s_PlayerFireWeaponEvent;
+        EventManager.Broadcast(fireEvt);
+
         int bulletsPerThisShot = UseAmmo(_bulletsPerShot);
 
         for (int i = 0; i < bulletsPerThisShot; i++)
@@ -190,8 +200,17 @@ public class WeaponController : MonoBehaviour
                 // Removes health to any IDamagable object we might hit.
                 objectDamagable?.RemoveHealth(_damagePerBullet);
 
-                if (_impactParticleEffect != null)
-                    Instantiate(_impactParticleEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                if (hitInfo.collider.gameObject.tag.Equals("Clown"))
+                {
+                    if (_bloodParticleEffect != null)
+                        Instantiate(_bloodParticleEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                }
+
+                if (hitInfo.collider.gameObject.tag.Equals("Wall"))
+                {
+                    if(_wallParticleEffect != null)
+                        Instantiate(_wallParticleEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                }
 
                 Vector2 recoilDirection = -shotDirection.normalized;
                 _player.Recoil(recoilForce, recoilDirection);

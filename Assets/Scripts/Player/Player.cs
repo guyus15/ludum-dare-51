@@ -4,17 +4,50 @@ public class Player : MonoBehaviour, IDamagable, IMoveable
 {
     [field: SerializeField, Header("Movement")]
     public float MoveSpeed { get; set; }
+    public Vector2 Velocity { get; set; }
 
     [field: SerializeField, Header("Health")]
     public int MaxHealth { get; set; }
     public int CurrentHealth { get; private set; }
 
+    [SerializeField] private float _timeBetweenHealthLoss;
+    private float _currentTimeBetweenHealthLoss;
+
+    private bool _canBeDamaged;
+
+    [SerializeField] private BoxCollider2D _hitBox;
+
     private Rigidbody2D _rb2d;
+
+    private void Awake()
+    {
+        EventManager.AddListener<PlayerPickupEvent>(OnPickup);
+    }
 
     private void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();
         _rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        CurrentHealth = MaxHealth;
+
+        _canBeDamaged = true;
+
+        // Broadcast a player spawn event/
+        PlayerSpawnEvent spawnEvt = Events.s_PlayerSpawnEvent;
+        spawnEvt.maxHealth = MaxHealth;
+        EventManager.Broadcast(spawnEvt);
+    }
+
+    private void Update()
+    {
+        if (_currentTimeBetweenHealthLoss >= _timeBetweenHealthLoss)
+        {
+            _canBeDamaged = true;
+            _currentTimeBetweenHealthLoss = 0;
+        }
+
+        _currentTimeBetweenHealthLoss += Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -44,19 +77,43 @@ public class Player : MonoBehaviour, IDamagable, IMoveable
 
     public void RemoveHealth(int amount)
     {
+        if (!_canBeDamaged) return;
+
         CurrentHealth = Mathf.Clamp(CurrentHealth - amount, 0, MaxHealth);
 
+        PlayerHitEvent hitEvt = Events.s_PlayerHitEvent;
+        hitEvt.currentHealth = CurrentHealth;
+        hitEvt.damageInflicted = amount;
+        EventManager.Broadcast(hitEvt);
+
         if (CurrentHealth <= 0) Die();
+
+        _canBeDamaged = false;
     }
 
     public void AddHealth(int amount)
     {
         CurrentHealth = Mathf.Clamp(CurrentHealth + amount, 0, MaxHealth);
+
+        PlayerGainHealthEvent gainHealthEvt = Events.s_PlayerGainHealthEvent;
+        gainHealthEvt.currentHealth = CurrentHealth;
+        EventManager.Broadcast(gainHealthEvt);
     }
 
     public void Die()
     {
-        Debug.Log("Dying");
-        Destroy(gameObject);
+        PlayerDeathEvent deathEvt = Events.s_PlayerDeathEvent;
+        EventManager.Broadcast(deathEvt);
+    }
+
+    private void OnPickup(PlayerPickupEvent evt)
+    {
+        switch (evt.type)
+        {
+            case PlayerPickupEvent.PickupType.HEALTH:
+                Debug.Log("Picking up health.");
+                AddHealth(GameConstants.HEALTH_PICKUP_AMOUNT);
+                break;
+        }
     }
 }

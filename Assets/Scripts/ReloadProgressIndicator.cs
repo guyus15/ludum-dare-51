@@ -11,7 +11,8 @@ public class ReloadProgressIndicator : MonoBehaviour
     private Image _reloadProgressIndicator;
 
     private PlayerReloadEvent _reloadEvent;
-    private void Start()
+
+    private void Awake()
     {
         EventManager.AddListener<PlayerReloadEvent>(OnReload);
 
@@ -26,7 +27,8 @@ public class ReloadProgressIndicator : MonoBehaviour
         _startReloadTime = Time.time;
         _reloadTime = _reloadEvent.reloadTime;
 
-        _reloadProgressIndicator.enabled = true;
+        if (_reloadProgressIndicator != null)
+            _reloadProgressIndicator.enabled = true;
 
         _isProgressing = true;
     }
@@ -34,6 +36,8 @@ public class ReloadProgressIndicator : MonoBehaviour
     private void Update()
     {
         float timeSinceReloadStarted = Time.time - _startReloadTime;
+
+        if (_reloadProgressIndicator == null) return;
 
         if (_isProgressing)
         {

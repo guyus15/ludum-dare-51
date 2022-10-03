@@ -13,11 +13,17 @@ public class SoundManager : MonoBehaviour
 
     private void PlayFireSound(PlayerFireWeaponEvent evt)
     {
-        _fireSound.Play();
+        if (_fireSound != null)
+        { 
+            _fireSound.Play();
+        }
     }
-
+    
     private void PlayPickupSound(PlayerPickupEvent evt)
     {
-        _ammoPickupSound.Play();
+        if (_ammoPickupSound != null)
+        {
+            _ammoPickupSound.Play();
+        }
     }
 }

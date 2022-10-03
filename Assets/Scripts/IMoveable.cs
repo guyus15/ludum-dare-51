@@ -1,4 +1,6 @@
-﻿public interface IMoveable
+﻿using UnityEngine;
+
+public interface IMoveable
 {
     public float MoveSpeed { get; set; }
 

@@ -12,8 +12,6 @@ public class PickupSpawner : MonoBehaviour
 
     private void SpawnPickup(EnemyDeathEvent evt)
     {
-        Debug.Log("Handling spawning of pickup");
-
         Vector2 spawnLocation = new Vector2(evt.xPos, evt.yPos);
 
         int healthPickupValue = Random.Range(1, 101);
@@ -21,13 +19,11 @@ public class PickupSpawner : MonoBehaviour
 
         if (healthPickupValue <= GameConstants.HEALTH_PICKUP_CHANCE)
         {
-            Debug.Log("Spawning health pickup");
             Instantiate(_healthPickupObject, spawnLocation, Quaternion.identity);
         }
 
         if (ammoPickupValue <= GameConstants.AMMO_PICKUP_CHANCE)
         {
-            Debug.Log("Spawning ammo pickup");
             Instantiate(_ammoPickupObject, spawnLocation, Quaternion.identity);
         }
     }

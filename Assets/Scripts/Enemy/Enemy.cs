@@ -62,7 +62,8 @@ public class Enemy : MonoBehaviour, IDamagable, IMoveable
         float angle = Mathf.Atan2(targetDir.x, targetDir.y) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, -transform.forward);
 
-        _rb2d.velocity = transform.up * MoveSpeed;
+        _rb2d.AddForce(transform.up * MoveSpeed);
+        _rb2d.velocity = Vector2.ClampMagnitude(_rb2d.velocity, MoveSpeed);
     }
 
     public void RemoveHealth(int amount)

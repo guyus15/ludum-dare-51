@@ -4,6 +4,7 @@ public class Player : MonoBehaviour, IDamagable, IMoveable
 {
     [field: SerializeField, Header("Movement")]
     public float MoveSpeed { get; set; }
+    public Vector2 Velocity { get; set; }
 
     [field: SerializeField, Header("Health")]
     public int MaxHealth { get; set; }

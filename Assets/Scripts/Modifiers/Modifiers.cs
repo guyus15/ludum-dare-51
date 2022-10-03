@@ -7,6 +7,8 @@ public class Modifiers : MonoBehaviour
     public PlayerDamageIncreaseModifier PlayerDamageIncreaseModifier { get; private set; }
     public PlayerBulletSpreadIncreaseModifier PlayerBulletSpreadIncreaseModifier { get; set; }
     public PlayerFireRateIncreaseModifier PlayerFireRateIncreaseModifier { get; set; }
+    public PlayerReloadSpeedDecreaseModifier PlayerReloadSpeedDecreaseModifier { get; set; }
+    public PlayerReloadSpeedIncreaseModifier PlayerReloadSpeedIncreaseModifier { get; set; }
 
     public List<IModifier> AllModifiers { get; private set; }
 
@@ -15,12 +17,16 @@ public class Modifiers : MonoBehaviour
         PlayerDamageIncreaseModifier = gameObject.AddComponent<PlayerDamageIncreaseModifier>();
         PlayerBulletSpreadIncreaseModifier = gameObject.AddComponent<PlayerBulletSpreadIncreaseModifier>();
         PlayerFireRateIncreaseModifier = gameObject.AddComponent<PlayerFireRateIncreaseModifier>();
+        PlayerReloadSpeedDecreaseModifier = gameObject.AddComponent<PlayerReloadSpeedDecreaseModifier>();
+        PlayerReloadSpeedIncreaseModifier = gameObject.AddComponent<PlayerReloadSpeedIncreaseModifier>();
 
         AllModifiers = new List<IModifier>()
         {
             PlayerDamageIncreaseModifier,
             PlayerBulletSpreadIncreaseModifier,
-            PlayerFireRateIncreaseModifier
+            PlayerFireRateIncreaseModifier,
+            PlayerReloadSpeedDecreaseModifier,
+            PlayerReloadSpeedIncreaseModifier
         };
     }
 }
@@ -124,5 +130,72 @@ public class PlayerFireRateIncreaseModifier : MonoBehaviour, IModifier
     public void Deactivate()
     {
         _playerWeaponManager.ActiveWeapon.ResetFireRate();
+    }
+}
+
+public class PlayerReloadSpeedDecreaseModifier : MonoBehaviour, IModifier
+{
+    public string Name { get; set; }
+    public float ReloadSpeedIncrease { get; private set; }
+
+    private WeaponManager _playerWeaponManager;
+
+    private void Awake()
+    {
+        Name = "Player Reload Speed Decreased";
+
+        _playerWeaponManager = FindObjectOfType<WeaponManager>();
+    }
+
+    public void Activate()
+    {
+        System.Random random = new System.Random();
+        ReloadSpeedIncrease = random.Next(GameConstants.MIN_PLAYER_RELOAD_SPEED_INCREASE, GameConstants.MAX_PLAYER_RELOAD_SPEED_INCREASE);
+
+        _playerWeaponManager.ActiveWeapon.DecreaseReloadSpeed(ReloadSpeedIncrease);
+
+        NotifyPlayerEvent notifyPlayerEvent = Events.s_NotifyPlayerEvent;
+        notifyPlayerEvent.titleText = Name;
+        notifyPlayerEvent.descriptionText = $"Decreased player reload speed by {1 / ReloadSpeedIncrease:0.#} seconds.";
+        notifyPlayerEvent.delayVisible = 3.0f;
+        EventManager.Broadcast(notifyPlayerEvent);
+    }
+
+    public void Deactivate()
+    {
+        _playerWeaponManager.ActiveWeapon.ResetReloadTime();
+    }
+}
+public class PlayerReloadSpeedIncreaseModifier : MonoBehaviour, IModifier
+{
+    public string Name { get; set; }
+    public float ReloadSpeedIncrease { get; private set; }
+
+    private WeaponManager _playerWeaponManager;
+
+    private void Awake()
+    {
+        Name = "Player Reload Speed Increased";
+
+        _playerWeaponManager = FindObjectOfType<WeaponManager>();
+    }
+
+    public void Activate()
+    {
+        System.Random random = new System.Random();
+        ReloadSpeedIncrease = random.Next(GameConstants.MIN_PLAYER_RELOAD_SPEED_INCREASE, GameConstants.MAX_PLAYER_RELOAD_SPEED_INCREASE);
+
+        _playerWeaponManager.ActiveWeapon.IncreaseReloadSpeed(ReloadSpeedIncrease);
+
+        NotifyPlayerEvent notifyPlayerEvent = Events.s_NotifyPlayerEvent;
+        notifyPlayerEvent.titleText = Name;
+        notifyPlayerEvent.descriptionText = $"Increased player reload speed by {1 / ReloadSpeedIncrease:0.#} seconds.";
+        notifyPlayerEvent.delayVisible = 3.0f;
+        EventManager.Broadcast(notifyPlayerEvent);
+    }
+
+    public void Deactivate()
+    {
+        _playerWeaponManager.ActiveWeapon.ResetReloadTime();
     }
 }

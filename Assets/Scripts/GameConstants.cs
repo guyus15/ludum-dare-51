@@ -24,6 +24,12 @@ public class GameConstants
     public const int MAX_PLAYER_FIRE_RATE_INCREASE = 50;
     public const int MIN_PLAYER_FIRE_RATE_INCREASE = 10;
 
+    public const int MAX_PLAYER_RELOAD_SPEED_DECREASE = 5;
+    public const int MIN_PLAYER_RELOAD_SPEED_DECREASE = 1;
+
+    public const int MAX_PLAYER_RELOAD_SPEED_INCREASE = 5;
+    public const int MIN_PLAYER_RELOAD_SPEED_INCREASE = 1;
+
     // Pickups
     public const int HEALTH_PICKUP_AMOUNT = 20;
     public const int AMMO_PICKUP_AMOUNT = 100;

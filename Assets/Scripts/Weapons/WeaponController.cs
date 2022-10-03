@@ -31,6 +31,8 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private int _startingAmmoInStockpile = 10;
     [SerializeField] private int _ammoPerClip = 3;
 
+    private float _oldReloadTime;
+
     private int _currentAmmoInStockpile;
     private int _currentAmmoInClip;
     private float _lastTimeShot = Mathf.NegativeInfinity;
@@ -54,6 +56,7 @@ public class WeaponController : MonoBehaviour
         _oldDamagePerBullet = _damagePerBullet;
         _oldBulletSpreadAngle = _bulletSpreadAngle;
         _oldFireRate = _weaponShotDelay;
+        _oldReloadTime = reloadTime;
 
         _currentAmmoInStockpile = _startingAmmoInStockpile;
         _currentAmmoInClip = _ammoPerClip;
@@ -158,6 +161,23 @@ public class WeaponController : MonoBehaviour
         _weaponShotDelay = _oldFireRate;
     }
 
+    public void DecreaseReloadSpeed(float amount)
+    {
+        _oldReloadTime = reloadTime;
+        reloadTime = 1.0f / ((1.0f / reloadTime) + amount);
+    }
+
+    public void IncreaseReloadSpeed(float amount)
+    {
+        _oldReloadTime = reloadTime;
+        reloadTime += 1.0f / amount;
+    }
+
+    public void ResetReloadTime()
+    {
+        reloadTime = _oldReloadTime;
+    }
+
     public void AddAmmo(int amount)
     {
         _currentAmmoInClip = _ammoPerClip;
@@ -200,13 +220,13 @@ public class WeaponController : MonoBehaviour
                 // Removes health to any IDamagable object we might hit.
                 objectDamagable?.RemoveHealth(_damagePerBullet);
 
-                if (hitInfo.collider.gameObject.tag.Equals("Clown"))
+                if (hitInfo.collider.gameObject.CompareTag("Clown"))
                 {
                     if (_bloodParticleEffect != null)
                         Instantiate(_bloodParticleEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
                 }
 
-                if (hitInfo.collider.gameObject.tag.Equals("Wall"))
+                if (hitInfo.collider.gameObject.CompareTag("Wall"))
                 {
                     if(_wallParticleEffect != null)
                         Instantiate(_wallParticleEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));

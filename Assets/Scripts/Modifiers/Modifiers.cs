@@ -34,7 +34,7 @@ public class PlayerDamageIncreaseModifier : MonoBehaviour, IModifier
 
     private void Awake()
     {
-        Name = "Player Damage Increase Modifier";
+        Name = "Player Damage Increased";
 
         _playerWeaponManager = FindObjectOfType<WeaponManager>();
     }
@@ -45,6 +45,12 @@ public class PlayerDamageIncreaseModifier : MonoBehaviour, IModifier
         DamageIncreaseAmount = random.Next(GameConstants.MIN_PLAYER_DAMAGE_INCREASE, GameConstants.MAX_PLAYER_DAMAGE_INCREASE);
 
         _playerWeaponManager.ActiveWeapon.IncreaseBulletDamage(DamageIncreaseAmount);
+
+        NotifyPlayerEvent notifyPlayerEvent = Events.s_NotifyPlayerEvent;
+        notifyPlayerEvent.titleText = Name;
+        notifyPlayerEvent.descriptionText = $"Increased player damage by {DamageIncreaseAmount} points.";
+        notifyPlayerEvent.delayVisible = 3.0f;
+        EventManager.Broadcast(notifyPlayerEvent);
     }
 
     public void Deactivate()
@@ -62,7 +68,7 @@ public class PlayerBulletSpreadIncreaseModifier : MonoBehaviour, IModifier
 
     private void Awake()
     {
-        Name = "Player Bullet Spread Increase Modifier";
+        Name = "Player Bullet Spread Increased";
 
         _playerWeaponManager = FindObjectOfType<WeaponManager>();
     }
@@ -73,6 +79,12 @@ public class PlayerBulletSpreadIncreaseModifier : MonoBehaviour, IModifier
         SpreadIncreaseAmount = random.Next(GameConstants.MIN_PLAYER_BULLET_SPREAD_INCREASE, GameConstants.MAX_PLAYER_BULLET_SPREAD_INCREASE);
 
         _playerWeaponManager.ActiveWeapon.IncreaseBulletSpread(SpreadIncreaseAmount);
+
+        NotifyPlayerEvent notifyPlayerEvent = Events.s_NotifyPlayerEvent;
+        notifyPlayerEvent.titleText = Name;
+        notifyPlayerEvent.descriptionText = $"Increased bullet spread by {SpreadIncreaseAmount} degrees.";
+        notifyPlayerEvent.delayVisible = 3.0f;
+        EventManager.Broadcast(notifyPlayerEvent);
     }
 
     public void Deactivate()
@@ -90,7 +102,7 @@ public class PlayerFireRateIncreaseModifier : MonoBehaviour, IModifier
 
     private void Awake()
     {
-        Name = "Player Fire Rate Increase Modifier";
+        Name = "Player Fire Rate Increased";
 
         _playerWeaponManager = FindObjectOfType<WeaponManager>();
     }
@@ -101,6 +113,12 @@ public class PlayerFireRateIncreaseModifier : MonoBehaviour, IModifier
         FireRateIncrease = random.Next(GameConstants.MIN_PLAYER_FIRE_RATE_INCREASE, GameConstants.MAX_PLAYER_FIRE_RATE_INCREASE);
 
         _playerWeaponManager.ActiveWeapon.IncreaseFireRate(FireRateIncrease);
+
+        NotifyPlayerEvent notifyPlayerEvent = Events.s_NotifyPlayerEvent;
+        notifyPlayerEvent.titleText = Name;
+        notifyPlayerEvent.descriptionText = $"Increased player fire rate by {FireRateIncrease} bullets per seconds.";
+        notifyPlayerEvent.delayVisible = 3.0f;
+        EventManager.Broadcast(notifyPlayerEvent);
     }
 
     public void Deactivate()

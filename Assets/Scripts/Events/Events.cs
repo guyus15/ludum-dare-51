@@ -8,6 +8,8 @@ public static class Events
     public static readonly PlayerPickupEvent s_PlayerPickupEvent = new PlayerPickupEvent();
     public static readonly PlayerFireWeaponEvent s_PlayerFireWeaponEvent = new PlayerFireWeaponEvent();
     public static readonly EnemyDeathEvent s_EnemyDeathEvent = new EnemyDeathEvent();
+    public static readonly DisplayMessageEvent s_DisplayMessageEvent = new DisplayMessageEvent();
+    public static readonly NotifyPlayerEvent s_NotifyPlayerEvent = new NotifyPlayerEvent();
 }
 
 public class PlayerSpawnEvent : GameEvent
@@ -52,4 +54,17 @@ public class PlayerFireWeaponEvent : GameEvent { }
 public class EnemyDeathEvent : GameEvent
 {
     public float xPos, yPos;
+}
+
+public class DisplayMessageEvent : GameEvent
+{
+    public string message;
+    public float delayBeforeDisplay;
+}
+
+public class NotifyPlayerEvent : GameEvent
+{
+    public string titleText;
+    public string descriptionText;
+    public float delayVisible;
 }

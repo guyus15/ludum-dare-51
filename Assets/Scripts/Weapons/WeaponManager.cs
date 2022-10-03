@@ -56,7 +56,7 @@ public class WeaponManager : MonoBehaviour
                 EventManager.Broadcast(evt);
             }
 
-            if (ActiveWeapon.automaticReload && ActiveWeapon.NeedsToReload)
+            if ((ActiveWeapon.automaticReload && ActiveWeapon.NeedsToReload) || InputManager.GetReloadInputDown())
             {
                 // Handle automatic reloading here
 
